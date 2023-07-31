@@ -18,10 +18,121 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
 }
+
+.back-home {
+  background: url("/img/back-home.png") center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.back-ouss {
+  background: url("/img/back-ouss.png") center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.back-yomi {
+  background: url("/img/back-yomi.png") center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.back-antoine {
+  background: url("/img/back-antoine.png") center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.parchment-ouss {
+  background: url("/img/parchment-ouss.png");
+  background-size: 100% 100%;
+  font-family: 'cinnamon';
+}
+
+.parchment-yomi {
+  background: url("/img/parchment-yomi.png");
+  background-size: 100% 100%;
+  font-family: 'cinnamon';
+}
+
+.parchment-antoine {
+  background: url("/img/parchment-antoine.png");
+  background-size: 100% 100%;
+  font-family: 'cinnamon';
+}
+
+.hourglass {
+  animation: spinHourglass 3s infinite;
+}
+
+.tool-item img{
+  filter: brightness(1.25);
+}
+
+.tool-item:hover img {
+  animation: animateMan 2s infinite;
+}
+
+.hat{
+  opacity: 0;
+}
+
+.man-ouss:hover > .hat {
+  animation: animateHat 3s ease-in infinite;
+}
+
+.font-alkatra{
+  font-family: 'alkatra';
+}
+
+@keyframes spinHourglass {
+  0% {
+    transform: rotate(0);
+  }
+  40% {
+    transform: rotate(180deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  90% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes animateHat {
+  0% {transform: translateY(-20px); opacity: 0;}
+  50% {transform: translateY(0px); opacity: 1;}
+  100% {transform: translateY(0px); opacity: 1;}
+}
+
+@keyframes animateMan {
+  0% {transform: translateY(0px);}
+  50% {transform: translateY(-10px);}
+  100% {transform: translateY(0px);}
+}
+
+@font-face {
+  font-family: 'griphite';
+  src: url('/fonts/griphite/GriphitePersonalUse-D4X9.ttf');
+}
+
+@font-face {
+  font-family: 'quebecks';
+  src: url('/fonts/quebecks/Quebecks-rgX4L.ttf');
+}
+
+@font-face {
+  font-family: 'cinnamon';
+  src: url('/fonts/cinnamon/CinnamonCoffeCake-Ea2Pr.ttf');
+}
+
+@font-face {
+  font-family: 'alkatra';
+  src: url('/fonts/alkatra/Alkatra-VariableFont_wght.ttf');
+}
+

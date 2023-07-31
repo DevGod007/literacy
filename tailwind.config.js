@@ -1,9 +1,14 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+
+const withMT = require('@material-tailwind/react/src/utils/withMT')
+
+module.exports = withMT({
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
+    'F:/Projects/Node.js/Next.js/literacy/node_modules/@material-tailwind/react/src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    'F:/Projects/Node.js/Next.js/literacy/node_modules/@material-tailwind/react/theme/components/**/*.{js,ts,jsx,tsx}'
   ],
   theme: {
     extend: {
@@ -15,4 +20,4 @@ module.exports = {
     },
   },
   plugins: [],
-}
+})
