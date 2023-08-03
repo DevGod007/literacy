@@ -1,4 +1,4 @@
-export const OPENAI_API_KEY = "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";
+export const OPENAI_API_KEY = "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";
 
 export const PERSONALITIES = [
 	"Jésus de Nazareth",

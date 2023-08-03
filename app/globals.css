@@ -44,6 +44,24 @@ body {
   background-repeat: no-repeat;
 }
 
+.back-gabin {
+  background: url("/img/back-gabin.png") center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.back-picasso {
+  background: url("/img/back-picasso.png") center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.back-elon {
+  background: url("/img/back-elon.png") center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 .parchment-ouss {
   background: url("/img/parchment-ouss.png");
   background-size: 100% 100%;
@@ -58,6 +76,24 @@ body {
 
 .parchment-antoine {
   background: url("/img/parchment-antoine.png");
+  background-size: 100% 100%;
+  font-family: 'cinnamon';
+}
+
+.parchment-gabin {
+  background: url("/img/parchment-gabin.png");
+  background-size: 100% 100%;
+  font-family: 'cinnamon';
+}
+
+.parchment-picasso {
+  background: url("/img/parchment-picasso.png");
+  background-size: 100% 100%;
+  font-family: 'cinnamon';
+}
+
+.parchment-elon {
+  background: url("/img/parchment-elon.png");
   background-size: 100% 100%;
   font-family: 'cinnamon';
 }

@@ -90,7 +90,7 @@ Reply in this language:${language}`
 				</div>
 				<div className='my-3 w-full'>
 					<input
-						className='w-full cursor-default overflow-hidden rounded-full border-2 border-[#ffffff80] bg-[#ffffff30] text-center text-xl shadow-md focus:outline-none px-8 py-4 backdrop-blur-sm leading-5 text-[#dddddd] outline-none focus:ring-0'
+						className='w-full cursor-default overflow-hidden rounded-full border-2 border-[#ffffff80] bg-[#ffffff30] text-center text-xl shadow-md focus:outline-none px-8 py-4 backdrop-blur-[6px] leading-5 text-[#dddddd] outline-none focus:ring-0'
 						value={book}
 						placeholder='NAME OF THE BOOK'
 						onChange={(event) => handleBookChange(event.target.value)}

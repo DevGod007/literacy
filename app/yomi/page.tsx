@@ -99,7 +99,7 @@ Reply in this language:${language}`
 				</div>
 				<div className='mb-2 w-full'>
 					<textarea
-						className='w-full cursor-default overflow-hidden rounded-lg border-2 border-[#ffffff80] bg-[#ffffff30] text-center text-lg shadow-md focus:outline-none px-8 py-4 backdrop-blur-sm leading-5 text-[#dddddd] outline-none focus:ring-0'
+						className='w-full cursor-default overflow-hidden rounded-lg border-2 border-[#ffffff80] bg-[#ffffff30] text-center text-lg shadow-md focus:outline-none px-8 py-4 backdrop-blur-[6px] leading-5 text-[#dddddd] outline-none focus:ring-0'
 						value={question}
 						rows={2}
 						placeholder='ASK YOUR QUESTION?'

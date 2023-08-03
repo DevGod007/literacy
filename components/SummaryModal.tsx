@@ -23,7 +23,7 @@ export default function SummaryModal({ page, visible, title, content, setVisible
 						leaveFrom="opacity-100"
 						leaveTo="opacity-0"
 					>
-						<div className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm" />
+						<div className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-[6px]" />
 					</Transition.Child>
 
 					<div className="fixed inset-0 overflow-y-auto">
@@ -37,7 +37,7 @@ export default function SummaryModal({ page, visible, title, content, setVisible
 								leaveFrom="opacity-100 scale-100"
 								leaveTo="opacity-0 scale-95"
 							>
-								<Dialog.Panel className={`w-full max-w-4xl transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-xl transition-all bg-[#ffffffa0] backdrop-blur-sm parchment-${page}`}>
+								<Dialog.Panel className={`w-full max-w-4xl transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-xl transition-all bg-[#ffffffa0] parchment-${page}`}>
 									<Dialog.Title
 										as="h3"
 										className="text-2xl mt-2 leading-6 text-brown-800 pl-[80px]"
@@ -45,7 +45,7 @@ export default function SummaryModal({ page, visible, title, content, setVisible
 										{title}
 									</Dialog.Title>
 									<div className="mt-2 pl-[80px]">
-										<div className="parchment-content text-2xl text-brown-800 max-h-[450px] md:max-h-[600px] overflow-y-auto" dangerouslySetInnerHTML={{ __html: content }}>
+										<div className="parchment-content text-2xl text-brown-800 min-h-[500px] max-h-[600px] md:max-h-[600px] overflow-y-auto" dangerouslySetInnerHTML={{ __html: content }}>
 										</div>
 									</div>
 

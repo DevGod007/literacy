@@ -18,7 +18,7 @@ export default function EComobBox({ value, placeholder, handleChange, choices }:
 		<>
 			<Combobox value={value} onChange={handleChange}>
 				<div className="relative mt-1 z-10">
-					<div className="relative w-full cursor-default overflow-hidden rounded-lg border-2 border-[#ffffff80] bg-[#ffffff30] text-left shadow-md focus:outline-none focus:border-none text-lg px-4 py-2 backdrop-blur-sm">
+					<div className="relative w-full cursor-default overflow-hidden rounded-lg border-2 border-[#ffffff80] bg-[#ffffff30] text-left shadow-md focus:outline-none focus:border-none text-lg px-4 py-2 backdrop-blur-[6px]">
 						<Combobox.Input
 							className="w-full border-none bg-transparent py-2 px-2 leading-5 text-[#dddddd] outline-none focus:ring-0 text-center"
 							displayValue={(val: string) => val}
@@ -38,7 +38,7 @@ export default function EComobBox({ value, placeholder, handleChange, choices }:
 						leaveFrom="opacity-100"
 						leaveTo="opacity-0"
 					>
-						<Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md border-2 border-[#ffffff80] bg-[#ffffff30] py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm backdrop-blur-sm">
+						<Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md border-2 border-[#ffffff80] bg-[#ffffff30] py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm backdrop-blur-[6px]">
 							{choices.length === 0 ? (
 								<div className="relative cursor-default select-none py-2 px-4 text-[#dddddd]">
 									Nothing found.
