@@ -33,13 +33,13 @@ export default function ElonPage() {
 		`;
 
 		tasks.map(item => {
-			prompt += item;
+			prompt += item + '\n';
 		});
 		steps.map(item => {
-			prompt += item;
+			prompt += item + '\n';
 		});
 		contexts.map(item => {
-			prompt += item;
+			prompt += item + '\n';
 		});
 
 		prompt += `
