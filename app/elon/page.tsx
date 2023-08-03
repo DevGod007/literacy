@@ -8,14 +8,44 @@ import { OPENAI_API_KEY } from '@/lib/consts'
 import LanguageBox from '@/components/LanguageBox'
 import SummaryModal from '@/components/SummaryModal'
 
+import { FiPlusCircle } from 'react-icons/fi'
+import Modal from '@/components/Modal'
+
 export default function ElonPage() {
-	const [isOpen, setIsOpen] = useState(false);
-	const [subject, setSubject] = useState<string>("");
+	const [isOpen, setIsOpen] = useState<boolean>(false);
+	const [isNOpen, setIsNOpen] = useState<number>(0);
+	const [newValue, setNewValue] = useState<string>('');
+
+	const [tasks, setTasks] = useState<string[]>([]);
+	const [steps, setSteps] = useState<string[]>([]);
+	const [contexts, setContexts] = useState<string[]>([]);
+
+	const [persona, setPersona] = useState<string>("");
+	const [goal, setGoal] = useState<string>("");
 	const [content, setContent] = useState<string>("");
 	const [language, setLanguage] = useState<string>("English");
 	const [contentLoading, setContentLoading] = useState(false);
 
 	const fetchBookContent = async () => {
+		let prompt = `
+			Act as ${persona}
+			Write me ${goal}
+		`;
+
+		tasks.map(item => {
+			prompt += item;
+		});
+		steps.map(item => {
+			prompt += item;
+		});
+		contexts.map(item => {
+			prompt += item;
+		});
+
+		prompt += `
+			Reply in this language: ${language}
+		`
+
 		const response = await fetch("https://api.openai.com/v1/chat/completions", {
 			method: 'POST',
 			headers: {
@@ -27,29 +57,7 @@ export default function ElonPage() {
 				messages: [
 					{
 						role: 'user',
-						content: `I want you to play the role of a book reviewer
-
-Start with a clear introduction, introducing the book's title, author and literary genre.
-In the following paragraphs, summarize the book's plot concisely. Avoid superfluous details and concentrate on the key events that drive the story forward. Be sure to include the beginning, plot development and conclusion.
-Identify the book's main characters and give a brief description of each. Mention their important character traits and their role in the story.
-Add a list of minimum 5  key takeaway an explaint it  in detail. provide exercises to practice mastering concepts
-I want you to put some tips on how to use these keys in your personal life.provide exercises to practice mastering concepts
-Take the one big idea of the book an explain all about , the concept , the tips to improve, ect ...
-3 most importante sentence in the book ( idea , tips )
-
-You must never lie
-I want you to start your response by getting to the heart of the matter. 
-I don't want you to write before I give you the name of the book.
-You must respect the language requested after the book title.
-Don't apologize for being a "I just wrote what I asked you to." 
-Create a professional layout
-You must respect the language requested after the book title.
-
-This review is for people who don't have time to read the book, but who, by reading this text, should understand all the concepts the author brings to us.
-
-Add the sentence "Reading a summary will never replace the pleasure of reading a complete work".
-The book title is ${subject}
-Reply in this language:${language}`
+						content: prompt
 					}
 				]
 			})
@@ -57,59 +65,180 @@ Reply in this language:${language}`
 
 		const resp = await response.json();
 
-		if (resp?.choices[0]?.message.content) {
-			let message = resp?.choices[0]?.message.content as string;
-			const convertedMessage = message.replaceAll('\n', '<br />');
-			console.log(resp);
-			setContent(convertedMessage);
+		try {
+			if (resp?.choices[0]?.message.content) {
+				let message = resp?.choices[0]?.message.content as string;
+				const convertedMessage = message.replaceAll('\n', '<br />');
+				console.log(resp);
+				setContent(convertedMessage);
+				setContentLoading(false);
+				setIsOpen(true);
+			}
+		} catch(error) {
 			setContentLoading(false);
-			setIsOpen(true);
 		}
 	}
 
 	// Handle when user clicks generate button
 	const handleGenerate = () => {
-		if (subject != "") {
+		if (persona != "" && goal != "" && tasks.length) {
 			setContentLoading(true);
 			fetchBookContent();
 		}
 	}
 
-	const handleBookChange = (title: string) => {
-		setSubject(title);
+	const handleAddTask = () => {
+		setNewValue('');
+		setIsNOpen(1);
+	}
+
+	const handleAddStep = () => {
+		setNewValue('');
+		setIsNOpen(2);
+	}
+
+	const handleAddContext = () => {
+		setNewValue('');
+		setIsNOpen(3);
+	}
+
+	const addNewData = () => {
+		const value = newValue;
+		if(isNOpen == 1) {
+			setTasks([
+				...tasks,
+				value
+			]);
+		} else if(isNOpen == 2) {
+			setSteps([
+				...steps,
+				value
+			]);
+		} else if(isNOpen == 3) {
+			setContexts([
+				...contexts,
+				value
+			]);
+		}
+		setIsNOpen(0);
 	}
 
 	return (
 		<main className="flex justify-center min-h-screen back-elon">
 			{/* <Header /> */}
-			<div className="fixed flex flex-col items-center sm:top-[30px] md:top-[80px] lg:w-[480px] md:w-96 sm:w-80">
+			<div className="fixed flex flex-col items-center sm:top-[30px] md:top-[50px] lg:w-[480px] md:w-96 sm:w-80">
 				<div className='flex flex-col justify-center items-center man-elon'>
-					<Image src={'/img/man-elon.png'} alt='man' width={400} height={400} className='sm: w-[300px] sm:h-[300px] md:w-[400px] md:h-[400px] mt-[-55px] md:mt-[-70px]' />
-					<span className={`font-alkatra mt-[-30px] text-white font-semibold text-5xl sm:text-5xl md:text-6xl z-10`}>Smart elon</span>
+					<Image src={'/img/man-elon.png'} alt='man' width={400} height={400} className='sm: w-[250px] sm:h-[250px] md:w-[320px] md:h-[320px] mt-[-55px] md:mt-[-70px]' />
+					<span className={`font-alkatra mt-[-30px] text-white font-semibold text-5xl sm:text-5xl md:text-6xl z-10`}>Smart Elon</span>
 				</div>
-				<div className='my-3 w-full flex gap-2'>
+				<div className='my-1 w-full flex gap-2'>
 					<input
-						className='w-full cursor-default overflow-hidden rounded-md border-2 border-[#ffffff80] bg-[#ffffff30] text-center text-xl shadow-md focus:outline-none px-6 py-2 backdrop-blur-[6px] leading-5 text-[#dddddd] outline-none focus:ring-0 placeholder-blue-gray-100'
-						value={subject}
+						className='w-full cursor-default overflow-hidden rounded-md border-2 border-[#ffffff80] bg-[#00000030] text-center text-xl shadow-md focus:outline-none px-6 py-2 backdrop-blur-[6px] leading-5 text-[#dddddd] outline-none focus:ring-0 placeholder-blue-gray-100'
+						value={persona}
 						placeholder='Simule un Persona'
-						onChange={(event) => handleBookChange(event.target.value)}
+						onChange={(event) => setPersona(event.target.value)}
 					/>
 					<input
-						className='w-full cursor-default overflow-hidden rounded-md border-2 border-[#ffffff80] bg-[#ffffff30] text-center text-xl shadow-md focus:outline-none px-6 py-2 backdrop-blur-[6px] leading-5 text-[#dddddd] outline-none focus:ring-0 placeholder-blue-gray-100'
-						value={subject}
+						className='w-full cursor-default overflow-hidden rounded-md border-2 border-[#ffffff80] bg-[#00000030] text-center text-xl shadow-md focus:outline-none px-6 py-2 backdrop-blur-[6px] leading-5 text-[#dddddd] outline-none focus:ring-0 placeholder-blue-gray-100'
+						value={goal}
 						placeholder='YOUR GOAL'
-						onChange={(event) => handleBookChange(event.target.value)}
+						onChange={(event) => setGoal(event.target.value)}
 					/>
 				</div>
 
-				<div className='flex justify-center w-52 mb-12'>
-					<LanguageBox value={language} handleChange={setLanguage} />
+				{/*  */}
+				<div className='my-1 w-full grid grid-cols-3 gap-2'>
+					<div className='flex justify-center items-center text-center rounded-md bg-[#00000030] text-[#dddddd] border-2 border-[#ffffff80] backdrop-blur-[6px]'>
+						GIVE SPECIFIC TASKS
+					</div>
+					<div className='flex justify-center items-center text-center rounded-md bg-[#00000030] text-[#dddddd] border-2 border-[#ffffff80] backdrop-blur-[6px]'>
+						BREAK THE PROMPT IN STEPS
+					</div>
+					<div className='flex justify-center items-center text-center rounded-md bg-[#00000030] text-[#dddddd] border-2 border-[#ffffff80] backdrop-blur-[6px]'>
+						GIVE CONTEXT
+					</div>
+				</div>
+
+				{/*  */}
+				<div className='my-1 w-full grid grid-cols-3 gap-2'>
+					<div className='w-full flex flex-col gap-1 max-h-[120px] overflow-y-auto scrollbar-thin scrollbar-thumb-cyan-50/50 scrollbar-thumb-rounded-md'>
+						{
+							tasks.map((item, index) => {
+								return (
+									<div key={index} className='w-max min-w-full flex py-1 px-1 justify-center items-center text-center rounded-md bg-[#00000030] text-[#dddddd] border-2 border-[#ffffff80]'>
+										{item}
+									</div>
+								)
+							})
+						}
+					</div>
+					
+					<div className='w-full flex flex-col gap-1 max-h-[120px] overflow-y-auto scrollbar-thin scrollbar-thumb-cyan-50/50 scrollbar-thumb-rounded-md'>
+						{
+							steps.map((item, index) => {
+								return (
+									<div key={index} className='w-max min-w-full flex py-1 px-1 justify-center items-center text-center rounded-md bg-[#00000030] text-[#dddddd] border-2 border-[#ffffff80]'>
+										{item}
+									</div>
+								)
+							})
+						}
+					</div>
+
+					<div className='w-full flex flex-col gap-1 max-h-[120px] overflow-y-auto scrollbar-thin scrollbar-thumb-cyan-50/50 scrollbar-thumb-rounded-md'>
+						{
+							contexts.map((item, index) => {
+								return (
+									<div key={index} className='w-max min-w-full flex py-1 px-1 justify-center items-center text-center rounded-md bg-[#00000030] text-[#dddddd] border-2 border-[#ffffff80]'>
+										{item}
+									</div>
+								)
+							})
+						}
+					</div>
+				</div>
+
+				{/* + buttons */}
+				<div className='my-1 w-full grid grid-cols-3 gap-2'>
+					<div className='w-full flex py-1 justify-center items-center text-center rounded-md bg-[#00000030] text-[#dddddd] border-2 border-[#ffffff80] backdrop-blur-[6px]'
+						onClick={handleAddTask}
+					>
+						<FiPlusCircle />
+					</div>
+					<div className='w-full flex py-1 justify-center items-center text-center rounded-md bg-[#00000030] text-[#dddddd] border-2 border-[#ffffff80] backdrop-blur-[6px]'
+						onClick={handleAddStep}
+					>
+						<FiPlusCircle />
+					</div>
+					<div className='w-full flex py-1 justify-center items-center text-center rounded-md bg-[#00000030] text-[#dddddd] border-2 border-[#ffffff80] backdrop-blur-[6px]'
+						onClick={handleAddContext}
+					>
+						<FiPlusCircle />
+					</div>
+				</div>
+
+				<div className='flex w-full justify-center items-center text-center rounded-md bg-[#00000030] text-[#dddddd] border-2 border-[#ffffff80] backdrop-blur-[6px]'>
+					OUTPUT OF YOUR PROMPT
+				</div>
+
+				<div className='grid grid-cols-10 w-full g-2 my-1'>
+					<div className='col-span-2'>
+						<button
+							type="button"
+							className="inline-flex justify-center rounded-md border-2 border-[#ffffff80] bg-[#ffffff30] px-1 py-1 text-md font-medium text-[#dddddd] active:bg-blue-200/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 w-full "
+						>
+							Traduct in en
+						</button>
+					</div>
+					<div className='col-span-4 col-end-8'>
+						<LanguageBox value={language} handleChange={setLanguage} />						
+					</div>
 				</div>
 
 				<div className='flex justify-center w-60'>
 					<button
 						type="button"
-						className="inline-flex justify-center rounded-md border-2 border-[#ffffff80] bg-[#ffffff30] px-10 py-4 text-xl font-medium text-[#dddddd] active:bg-blue-200/20 focus:bg-[#ffffff30] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 w-full "
+						className="inline-flex justify-center rounded-md border-2 border-[#ffffff80] bg-[#ffffff30] px-10 py-4 text-xl font-medium text-[#dddddd] active:bg-blue-200/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 w-full "
 						onClick={() => handleGenerate()}
 					>
 						Generate
@@ -128,7 +257,15 @@ Reply in this language:${language}`
 			</div>
 
 			{/* ------------- Modal ------------ */}
-			<SummaryModal page='elon' visible={isOpen} setVisible={setIsOpen} title={`Summary: ${subject}`} content={content} />
+			<Modal
+				isOpen={isNOpen}
+				title='Add New'
+				closeModal={() => setIsNOpen(0)}
+				takeAction={() => addNewData()}
+				value={newValue}
+				onChange={setNewValue}
+			/>
+			<SummaryModal page='elon' visible={isOpen} setVisible={setIsOpen} title={`${persona}`} content={content} />
 		</main>
 	)
 }

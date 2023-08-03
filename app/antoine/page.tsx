@@ -53,7 +53,7 @@ Reply in this language:${language}`
 
 		const resp = await response.json();
 
-		if (resp?.choices[0]?.message.content) {
+		if (resp?.choices?.[0]?.message.content) {
 			let message = resp?.choices[0]?.message.content as string;
 			const convertedMessage = message.replaceAll('\n', '<br />');
 			console.log(resp);

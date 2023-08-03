@@ -130,7 +130,7 @@ export default function GabinPage() {
 		case 'Niji Anime, Anthro':
 			currentCategory = NijiAnime;
 			break;
-		case 'V4 Anime, ANthro':
+		case 'V4 Anime, Anthro':
 			currentCategory = V4Anime;
 			break;
 		case 'Sci-fi':
